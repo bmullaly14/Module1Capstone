@@ -49,9 +49,13 @@ namespace Capstone.Classes
 
         public void Display()
         {
-            foreach(KeyValuePair <string, ItemInventory > item in Inventory) 
-            { 
-            Console.WriteLine($"{item.Key} | {item.Value.ProductName} | {item.Value.Price:C2} | x {item.Value.numOfItems}");
+            foreach (KeyValuePair<string, ItemInventory> item in Inventory)
+            {
+                if (item.Value.numOfItems > 0)
+                {
+                    Console.WriteLine($"{item.Key} | {item.Value.ProductName} | {item.Value.Price:C2} | x {item.Value.numOfItems}");
+                }
+                else { Console.WriteLine($"{item.Key} | {item.Value.ProductName} | **SOLD OUT**"); }
             }
         }
     }

@@ -42,10 +42,15 @@ namespace Capstone.Classes
             //after dispensing, machine updates its inventory and returns customer to purchase menu
             Console.WriteLine("Please enter the code for the item you want.");
             string purchaseSelection = Console.ReadLine();
-            while (!CurrentMachine.Inventory.ContainsKey(purchaseSelection))
+            while (!CurrentMachine.Inventory.ContainsKey(purchaseSelection) || CurrentMachine.Inventory[purchaseSelection].numOfItems <= 0)
             {
                 Console.WriteLine("Invalid selection. Please try again.");
                 purchaseSelection = Console.ReadLine();
+            }
+            if(Balance < CurrentMachine.Inventory[purchaseSelection].Price)
+            {
+                Console.WriteLine("Insufficient Funds!");
+                return;
             }
           Dispense(purchaseSelection);
           
@@ -86,7 +91,7 @@ transactionMenu:
             {
                 CurrentMachine.Display();
                 SelectProduct();
-
+                goto transactionMenu;
             }
             else
             { //this will print receipt and finish transaction
