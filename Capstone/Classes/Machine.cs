@@ -49,7 +49,10 @@ namespace Capstone.Classes
 
         public void Display()
         {
-            return;
+            foreach(KeyValuePair <string, ItemInventory > item in Inventory) 
+            { 
+            Console.WriteLine($"{item.Key} | {item.Value.ProductName} | {item.Value.Price:C2} | x {item.Value.numOfItems}");
+            }
         }
     }
 }
