@@ -6,11 +6,16 @@ using System.Transactions;
 
 namespace Capstone.Classes
 {
-    public class Transaction
+    public class Transaction : IDisplayable
     {
        
         public decimal Balance { get; private set; }
-        
+        Machine CurrentMachine { get; }
+        public Transaction(Machine machine)
+        {
+            CurrentMachine= machine;
+        }
+
         public void FeedMoney()
         {
             Console.WriteLine($"Current balance is {Balance:C2}");
@@ -30,7 +35,27 @@ namespace Capstone.Classes
         }
         public void SelectProduct()
         {
-
+            //show list avialable products (machine.Display?)
+            //allow entering of product code - if doesn't exist, tell customer and return to purchase menu
+            //if sold out, tell customer and return to purchase menu
+            //if they select a valid product, dispense the item (print product name, cost, money remaining, animal sound
+            //after dispensing, machine updates its inventory and returns customer to purchase menu
+            Console.WriteLine("Please enter the code for the item you want.");
+            string purchaseSelection = Console.ReadLine();
+            while (!CurrentMachine.Inventory.ContainsKey(purchaseSelection))
+            {
+                Console.WriteLine("Invalid selection. Please try again.");
+                purchaseSelection = Console.ReadLine();
+            }
+          Dispense(purchaseSelection);
+          
+        }
+        public void Dispense(string selection)
+        {
+            Console.WriteLine($"{CurrentMachine.Inventory[selection].ProductName}, {CurrentMachine.Inventory[selection].Price}, {CurrentMachine.Inventory[selection].Sound}");
+            Balance -= CurrentMachine.Inventory[selection].Price;
+            CurrentMachine.Inventory[selection].numOfItems -= 1;
+            Console.WriteLine($"Your balance is {Balance}");
         }
         public void Display()
         {
@@ -59,6 +84,7 @@ transactionMenu:
             }
             else if (userInput == 2)
             {
+                CurrentMachine.Display();
                 SelectProduct();
 
             }

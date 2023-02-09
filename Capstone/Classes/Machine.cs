@@ -9,7 +9,7 @@ using System.Text;
 
 namespace Capstone.Classes
 {
-    public class Machine
+    public class Machine : IDisplayable
     {
         public Dictionary<string, ItemInventory> Inventory { get; set; } = new Dictionary<string, ItemInventory>();
 

@@ -8,11 +8,11 @@ namespace Capstone
 {
     class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             string fileInventory = Path.GetFullPath(@"vendingmachine.csv");
             Machine machine = new Machine(fileInventory);
-            Transaction transaction = new Transaction();
+            Transaction transaction = new Transaction(machine);
 
             Console.WriteLine("Welcome to the CuteCo, inc. Vendo-Matic 800!");
         mainMenu:
