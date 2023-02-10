@@ -10,7 +10,7 @@ namespace Capstone.Classes
     public class Transaction : IDisplayable
     {
 
-        public decimal Balance { get; private set; }
+        public decimal Balance { get; set; }
         VendingMachine CurrentMachine { get; }
         public Transaction(VendingMachine machine)
         {
@@ -107,32 +107,36 @@ namespace Capstone.Classes
                 SelectProduct();
                 goto transactionMenu;
             }
-            else
+            else //option 3, Exit Transaction
             {
 
                 Console.WriteLine($"Your remaining balance is {Balance:C2}.");
+                Console.WriteLine(GiveChange());
 
-                //int numDollars = 0;
-                int numQuarters = 0;
-                int numDimes = 0;
-                int numNickels = 0;
-                decimal changeBalance = Balance;
-
-                numQuarters = (int)( Balance / 0.25M);
-                decimal remainder = Balance % 0.25M;
-                numDimes = (int)(remainder / 0.10M);
-                remainder = remainder % 0.10M;
-                numNickels = (int)(remainder / 0.05M);
-                remainder = remainder % 0.05M;
-
-                Console.WriteLine($"Your change is {numQuarters} quarters, {numDimes} dimes, {numNickels} nickels.");
-
-                Balance = 0;
-
-                LogTransaction($"{DateTime.Now} GIVE CHANGE: {changeBalance:C2} | BALANCE: {Balance:C2}");
-                
             }
         }
+
+        public string GiveChange()
+        {
+            int numQuarters = 0;
+            int numDimes = 0;
+            int numNickels = 0;
+            decimal changeBalance = Balance;
+
+            numQuarters = (int)(Balance / 0.25M);
+            decimal remainder = Balance % 0.25M;
+            numDimes = (int)(remainder / 0.10M);
+            remainder = remainder % 0.10M;
+            numNickels = (int)(remainder / 0.05M);
+            remainder = remainder % 0.05M;
+
+            Balance = 0;
+            LogTransaction($"{DateTime.Now} GIVE CHANGE: {changeBalance:C2} | BALANCE: {Balance:C2}");
+
+           return ($"Your change is {numQuarters} quarters, {numDimes} dimes, {numNickels} nickels.");
+           
+        }
+
 
         public void LogTransaction(string logLine)
         {

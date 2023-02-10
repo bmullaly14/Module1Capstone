@@ -22,7 +22,7 @@ namespace CapstoneTests
         public void Init()
         {
             string currentDirectory = Environment.CurrentDirectory;
-            testSourceFile = @"C:\Users\Student\workspace\Partner Projects\c-sharp-minicapstonemodule1-team1\CapstoneTests\bin\Debug\netcoreapp3.1\TestIn.txt";
+            testSourceFile = Path.GetFullPath("TestIn.txt");
             string testOutFile = Path.GetFullPath(@"TestOut.txt");
             TestMachine = new VendingMachine(testSourceFile);
         }
@@ -51,7 +51,29 @@ namespace CapstoneTests
                 Capstone.Program.Main(null);
             }
         }
+        [TestMethod]
+        public void GiveChangeTest()
+        {
 
-            
+            Transaction testTransaction = new Transaction(TestMachine);
+            testTransaction.Balance = 0.65M;
+
+            string correct = "Your change is 2 quarters, 1 dimes, 1 nickels.";
+            string actual = testTransaction.GiveChange();
+            Assert.AreEqual(correct, actual);
+        }
+
+        [TestMethod]
+        public void LogTransactionTest()
+        {
+            Transaction testTransaction = new Transaction(TestMachine);
+            testTransaction.Balance = 0.65M;
+            testTransaction.GiveChange();
+            string testLog = Path.GetFullPath("Log.txt");
+            string actual = File.ReadAllText(testLog);
+            string expected = $"{DateTime.Now} GIVE CHANGE: $0.65 | BALANCE: $0.00";
+
+            Assert.AreEqual(expected, actual);
+        }
     }
 }
