@@ -103,7 +103,7 @@ namespace Capstone.Classes
             }
             else if (userInput == 2)
             {
-                CurrentMachine.Display();
+                Console.WriteLine(CurrentMachine.Display());
                 SelectProduct();
                 goto transactionMenu;
             }
