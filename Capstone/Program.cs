@@ -6,12 +6,12 @@ using Capstone.Classes.Items;
 
 namespace Capstone
 {
-    class Program
+    public class Program
     {
         public static void Main(string[] args)
         {
             string fileInventory = Path.GetFullPath(@"vendingmachine.csv");
-            Machine machine = new Machine(fileInventory);
+            VendingMachine machine = new VendingMachine(fileInventory);
             Transaction transaction = new Transaction(machine);
 
             Console.WriteLine("Welcome to the CuteCo, inc. Vendo-Matic 800!");
@@ -31,7 +31,7 @@ namespace Capstone
             }
             if(userInput == 1)
             {
-                machine.Display();
+                Console.WriteLine(machine.Display());
                 goto mainMenu;
             } else if (userInput == 2)
             {

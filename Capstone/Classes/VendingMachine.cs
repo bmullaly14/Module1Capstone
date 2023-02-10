@@ -9,11 +9,11 @@ using System.Text;
 
 namespace Capstone.Classes
 {
-    public class Machine
+    public class VendingMachine
     {
         public Dictionary<string, ItemInventory> Inventory { get; set; } = new Dictionary<string, ItemInventory>();
 
-        public Machine (string fileName)
+        public VendingMachine (string fileName)
         {
             try
             {
@@ -47,19 +47,20 @@ namespace Capstone.Classes
             
         }
 
-        public void Display()
+        public string Display()
         {
-            Console.WriteLine();
+            string displayString = "\n*Current Inventory*\n";
             foreach (KeyValuePair<string, ItemInventory> item in Inventory)
             {
 
                 if (item.Value.numOfItems > 0)
                 {
-                    Console.WriteLine($"{item.Key} | {item.Value.ProductName} | {item.Value.Price:C2} | x {item.Value.numOfItems}");
+                    displayString += ($"{item.Key} | {item.Value.ProductName} | {item.Value.Price:C2} | x {item.Value.numOfItems}\n");
                 }
-                else { Console.WriteLine($"{item.Key} | {item.Value.ProductName} | **SOLD OUT**"); }
+                else { displayString += ($"{item.Key} | {item.Value.ProductName} | **SOLD OUT**\n"); }
             }
-            Console.WriteLine();
+
+            return displayString;
         }
     }
 }

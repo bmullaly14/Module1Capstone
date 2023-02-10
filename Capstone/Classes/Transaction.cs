@@ -11,8 +11,8 @@ namespace Capstone.Classes
     {
 
         public decimal Balance { get; private set; }
-        Machine CurrentMachine { get; }
-        public Transaction(Machine machine)
+        VendingMachine CurrentMachine { get; }
+        public Transaction(VendingMachine machine)
         {
             CurrentMachine = machine;
         }

@@ -12,4 +12,13 @@
     <PackageReference Include="MSTest.TestFramework" Version="2.1.2" />
   </ItemGroup>
 
+	<ItemGroup>
+		<None Update="TestIn.txt">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Capstone\Capstone.csproj" />
+  </ItemGroup>
+
 </Project>
