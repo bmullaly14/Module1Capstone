@@ -16,6 +16,12 @@ namespace Capstone.Classes
         {
             CurrentMachine = machine;
         }
+        public Transaction(VendingMachine machine, string logFile)
+        {
+            CurrentMachine = machine;
+            LogFile = logFile;
+        }
+        private string LogFile { get; } = "Log.txt";
 
         public void FeedMoney()
         {                       
@@ -31,7 +37,7 @@ namespace Capstone.Classes
                     Balance += feedAmount;
                     Console.WriteLine($"\nCurrent money provided: {Balance:C2}\n");
 
-                    LogTransaction($"{DateTime.Now} FEED MONEY: {feedAmount:C2} | BALANCE: {Balance:C2}");
+                    LogTransaction($"{DateTime.Now} FEED MONEY: {feedAmount:C2} | BALANCE: {Balance:C2}", LogFile);
 
                     Console.WriteLine($"\nEnter more money? Y/N?\n");
 
@@ -40,7 +46,7 @@ namespace Capstone.Classes
                         isFeeding = false;
                     }
 
-                }
+                } else { Console.WriteLine("\n <Vendo-Matic 800> : If you don't want to give us your money, then pick something else!"); }
 
             }
             
@@ -74,7 +80,7 @@ namespace Capstone.Classes
             CurrentMachine.Inventory[selection].numOfItems -= 1;
             Console.WriteLine($"Your balance is {Balance}");
 
-            LogTransaction($"{DateTime.Now} {CurrentMachine.Inventory[selection].ProductName} {selection}: {CurrentMachine.Inventory[selection].Price:C2} | BALANCE: {Balance:C2}");
+            LogTransaction($"{DateTime.Now} {CurrentMachine.Inventory[selection].ProductName} {selection}: {CurrentMachine.Inventory[selection].Price:C2} | BALANCE: {Balance:C2}", LogFile);
         }
         public void Display()
         {
@@ -131,16 +137,16 @@ namespace Capstone.Classes
             remainder = remainder % 0.05M;
 
             Balance = 0;
-            LogTransaction($"{DateTime.Now} GIVE CHANGE: {changeBalance:C2} | BALANCE: {Balance:C2}");
+            LogTransaction($"{DateTime.Now} GIVE CHANGE: {changeBalance:C2} | BALANCE: {Balance:C2}", LogFile);
 
            return ($"Your change is {numQuarters} quarters, {numDimes} dimes, {numNickels} nickels.");
            
         }
 
 
-        public void LogTransaction(string logLine)
+        public void LogTransaction(string logLine, string file)
         {
-            string logFilename = Path.GetFullPath(@"Log.txt");
+            string logFilename = Path.GetFullPath($@"{file}");
             try
             {
                 using(StreamWriter sw = new StreamWriter(logFilename, true))
@@ -153,6 +159,8 @@ namespace Capstone.Classes
                 Console.WriteLine("File write error occurred. Please contact service 1-800-867-5309");
             }
         }
+
+        
 
         
     }

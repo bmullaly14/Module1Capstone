@@ -24,7 +24,14 @@ namespace Capstone
             while (userInput <= 0 || userInput > 3)
             {
                 bool parseWorked = int.TryParse(Console.ReadLine(), out userInput);
-                if (userInput <= 0 || userInput > 3|| !parseWorked)
+                if (userInput == 99)
+                {
+                    RollCredits();
+                    userInput = -1;
+                    goto mainMenu;
+                    
+                }
+                else if (userInput <= 0 || userInput > 3|| !parseWorked)
                 {
                     Console.WriteLine("Please try again!");
                 }                
@@ -39,6 +46,17 @@ namespace Capstone
                 goto mainMenu;
                 
             } else { Console.WriteLine("Thanks for using CuteCo, inc. Vendo-Matic 800! \nPlease come back soon!"); }
+        }
+        private static void RollCredits()
+        {
+            Console.WriteLine("*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*\n");
+            Console.WriteLine("This project was created as a Mini Capstone Project for Tech Elevator C#/.NET Cohort 22");
+            Console.WriteLine("**** Brought to you by ****");
+            Console.WriteLine("Dustan Byler  **  Darya Taraban");
+            Console.WriteLine("Ben Mullaly  **  Seth Barnett");
+            Console.WriteLine("\n*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*");
+
+            
         }
     }
 }

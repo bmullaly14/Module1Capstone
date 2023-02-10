@@ -11,7 +11,7 @@ using Capstone.Classes.Inventory;
 namespace CapstoneTests 
 {
     [TestClass]
-    public class UnitTest1
+    public class CapstoneUnitTests
     {
         private static string mainProjectDirectory;
         private static string testSourceFile;
@@ -66,14 +66,25 @@ namespace CapstoneTests
         [TestMethod]
         public void LogTransactionTest()
         {
-            Transaction testTransaction = new Transaction(TestMachine);
+            ResetTestFile("TestOut.txt");
+            Transaction testTransaction = new Transaction(TestMachine, "TestOut.txt");
             testTransaction.Balance = 0.65M;
             testTransaction.GiveChange();
-            string testLog = Path.GetFullPath("Log.txt");
-            string actual = File.ReadAllText(testLog);
-            string expected = $"{DateTime.Now} GIVE CHANGE: $0.65 | BALANCE: $0.00";
 
-            Assert.AreEqual(expected, actual);
+            string testLog = Path.GetFullPath("TestOut.txt");
+            string actual = File.ReadAllText(testLog);
+            string expected = $"GIVE CHANGE: $0.65 | BALANCE: $0.00";
+
+            Assert.IsTrue(actual.Contains(expected));
+
+
+        }
+        private void ResetTestFile(string testFile)
+        {
+            if (File.Exists(testFile))
+            {
+                File.Delete(testFile);
+            }
         }
     }
 }
