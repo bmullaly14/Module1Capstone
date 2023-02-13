@@ -4,13 +4,12 @@ using System.IO;
 using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Transactions;
-using System.Media;
 
 namespace Capstone.Classes
 {
     public class Transaction : IDisplayable
     {
-        
+
         public decimal Balance { get; set; }
         VendingMachine CurrentMachine { get; }
         public Transaction(VendingMachine machine)
@@ -75,11 +74,8 @@ namespace Capstone.Classes
 
         }
         public void Dispense(string selection)
-        {
-            string soundFile = Path.GetFullPath("tada.wav");
-            SoundPlayer transactionSound = new SoundPlayer(soundFile);
+        {           
             Console.WriteLine($"\n{CurrentMachine.Inventory[selection].ProductName}, {CurrentMachine.Inventory[selection].Price}, {CurrentMachine.Inventory[selection].Sound}");
-            transactionSound.PlaySync();
             Balance -= CurrentMachine.Inventory[selection].Price;
             CurrentMachine.Inventory[selection].numOfItems -= 1;
             Console.WriteLine($"Your balance is {Balance}");

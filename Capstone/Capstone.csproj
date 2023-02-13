@@ -5,14 +5,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="System.Windows.Extensions" Version="4.6.0" />
-  </ItemGroup>
-
 	<ItemGroup>
-		<None Update="tada.wav">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
 		<None Update="vendingmachine.csv">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
