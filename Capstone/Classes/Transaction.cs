@@ -33,7 +33,7 @@ namespace Capstone.Classes
                 Console.WriteLine($"Current balance is {Balance:C2}");
                 Console.WriteLine($"Please insert money in whole dollar amounts\n");
                 isFeeding = decimal.TryParse(Console.ReadLine(), out feedAmount);
-                if (isFeeding)
+                if (isFeeding && feedAmount > 0)
                 {
                     Balance += feedAmount;
                     Console.WriteLine($"\nCurrent money provided: {Balance:C2}\n");
@@ -47,7 +47,7 @@ namespace Capstone.Classes
                         isFeeding = false;
                     }
 
-                } else { Console.WriteLine("\n <Vendo-Matic 800> : If you don't want to give us your money, then pick something else!"); }
+                } else { Console.WriteLine("\n <Vendo-Matic 800> : If you don't want to give us your money, then pick something else!"); return; }
 
             }
             
@@ -64,7 +64,7 @@ namespace Capstone.Classes
             while (!CurrentMachine.Inventory.ContainsKey(purchaseSelection) || CurrentMachine.Inventory[purchaseSelection].numOfItems <= 0)
             {
                 Console.WriteLine("Invalid selection. Please try again.");
-                purchaseSelection = Console.ReadLine();
+                purchaseSelection = Console.ReadLine().ToUpper();
             }
             if (Balance < CurrentMachine.Inventory[purchaseSelection].Price)
             {
@@ -76,10 +76,12 @@ namespace Capstone.Classes
         }
         public void Dispense(string selection)
         {
-            string soundFile = Path.GetFullPath("tada.wav");
-            SoundPlayer transactionSound = new SoundPlayer(soundFile);
+            string soundPath = Path.GetFullPath("tada.wav");
+            SoundPlayer dispenseSound = new SoundPlayer(soundPath);
+
+
             Console.WriteLine($"\n{CurrentMachine.Inventory[selection].ProductName}, {CurrentMachine.Inventory[selection].Price}, {CurrentMachine.Inventory[selection].Sound}");
-            transactionSound.PlaySync();
+            dispenseSound.PlaySync();
             Balance -= CurrentMachine.Inventory[selection].Price;
             CurrentMachine.Inventory[selection].numOfItems -= 1;
             Console.WriteLine($"Your balance is {Balance}");
@@ -93,7 +95,7 @@ namespace Capstone.Classes
             Console.WriteLine($"Current money provided: {Balance:C2}");
             Console.WriteLine();
             Console.WriteLine($" (1) Feed Money \n (2) Select Product\n (3) Finish Transaction");
-            Console.WriteLine("Please make your selection");
+            Console.WriteLine("Please enter 1, 2, or 3");
             Console.WriteLine();
 
 
